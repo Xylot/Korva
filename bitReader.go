@@ -84,7 +84,7 @@ func convertToString(byteArray []byte) string {
 
 func getNextString(buf *bytes.Buffer) string {
     length := int(getStringLength(buf))
-    fmt.Printf("%+v", length)
+    //fmt.Printf("%+v", length)
     if length < 0 {
         return string(utf16.Decode(getStringBytes1(buf, -1*length)))
     }
