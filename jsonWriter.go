@@ -13,7 +13,6 @@ func testJSON() {
     user := &User{Name: "Frank"}
     b, err := json.Marshal(user)
     if err != nil {
-        //fmt.Printf(err)
         return
     }
     fmt.Printf(string(b))

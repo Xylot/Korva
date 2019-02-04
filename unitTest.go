@@ -1,9 +1,8 @@
 package main
 
 import (
-    //"fmt"
     "io/ioutil"
-     "log"
+    "log"
 )
 
 func gf() []string {

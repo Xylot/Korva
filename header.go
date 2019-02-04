@@ -4,8 +4,6 @@ import (
     "bytes"
     "encoding/binary"
     "os"
-    // "encoding/json"
-    // "fmt"
 )
 
 func getHeaderProperties(file *os.File) HeaderProperties {
@@ -14,13 +12,6 @@ func getHeaderProperties(file *os.File) HeaderProperties {
     binary.Read(bytes.NewBuffer(readNextBytesFromFile(file, 4)), binary.LittleEndian, &headerProps.CRC)
     headerProps.ByteStream = readNextBytesFromFile(file, int(headerProps.Size))
     headerProps.ContentBuffer = bytes.NewBuffer(headerProps.ByteStream)
-
-    // b, err := json.MarshalIndent(headerProps, "", "	")
-    // fmt.Printf(string(b))
-    // if err != nil {
-    //     //fmt.Printf(err)
-    // }
-
     return headerProps
 }
 
@@ -53,7 +44,3 @@ func getGameConstant(buf *bytes.Buffer) GameConstant {
 
 	return gameConstant
 }
-
-// func readHeader(buf *bytes.Buffer) HeaderContents {
-
-// }

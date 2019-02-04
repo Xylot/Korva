@@ -7,7 +7,6 @@ import (
     "os"
     "unicode/utf16"
     "fmt"
-    //"strconv"
 )
 
 
@@ -32,17 +31,6 @@ func readNextBytes(buf *bytes.Buffer, number int) []byte {
 
     return bytes
 }
-
-// func readNextBytes1(buf *bytes.Buffer, number int) []uint16 {
-//     bytes := make([]byte, number)
-
-//     _, err := buf.Read(bytes)
-//     if err != nil {
-//         log.Fatal(err)
-//     }
-
-//     return binary.LittleEndian.Uint16(bytes[:])
-// }
 
 func skipBytes(buf *bytes.Buffer, number int) {
 	bytes := make([]byte, number)
@@ -95,7 +83,6 @@ func convertToString(byteArray []byte) string {
 }
 
 func getNextString(buf *bytes.Buffer) string {
-	//data := binary.LittleEndian.Uint64(getStringBytes(buf, int(getStringLength(buf))))
     length := int(getStringLength(buf))
     fmt.Printf("%+v", length)
     if length < 0 {
@@ -126,27 +113,3 @@ func readUint32(buf *bytes.Buffer) uint32 {
     binary.Read(buffer, binary.LittleEndian, &value)
     return value;
 }
-
-// func readFloat32(buf *bytes.Buffer) float32 {
-
-// }
-
-// func readBool(buf *bytes.Buffer) bool {
-//     var value uint
-//     data := readNextBytes(buf, 1)
-//     buffer := bytes.NewBuffer(data)
-//     binary.Read(buffer, binary.LittleEndian, &value)
-//     return strconv.ParseBool(value);
-// }
-
-// func readVector(buf *bytes.Buffer) {
-//     vector := Vector{}
-//     numBits := readUint32Max(maxBits)
-//     var bias int32 = 1 << (int)(numBits + 1)
-//     var max int32 = (int)numBits + 2
-//     vector.DX = 
-// }
-
-// func readInt32Max(buf *bytes.Buffer) {
-    
-// }
