@@ -4,7 +4,7 @@ import (
     "bytes"
     "encoding/binary"
     "strconv"
-	"github.com/kennygrant/sanitize"
+	//"github.com/kennygrant/sanitize"
 	"strings"
 	//"fmt"
 )
@@ -20,7 +20,8 @@ func readIntProperty(buf *bytes.Buffer) int {
 
 func readStrProperty(buf *bytes.Buffer) string {
 	skipBytes(buf, 8)
-	return sanitize.Name(getNextString(buf));
+	//return sanitize.Name(getNextString(buf));
+	return getNextString(buf)
 }
 
 func readByteProperty(buf *bytes.Buffer) int {
