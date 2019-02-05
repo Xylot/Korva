@@ -5,7 +5,7 @@ import (
     "encoding/binary"
     "log"
     "os"
-    "unicode/utf16"
+    //"unicode/utf16"
     "fmt"
 )
 
@@ -64,7 +64,6 @@ func getStringBytes1(buf *bytes.Buffer, length int) []uint16 {
     if length % 2 == 0 {
         byteArray = byteArray[:len(byteArray)-1]
         for i := 0; i < length/2; i++ {
-
             utf16Array = append(utf16Array, binary.LittleEndian.Uint16(byteArray[i:i+1]))
             fmt.Printf("%+v", utf16Array)
         }
@@ -86,7 +85,8 @@ func getNextString(buf *bytes.Buffer) string {
     length := int(getStringLength(buf))
     //fmt.Printf("%+v", length)
     if length < 0 {
-        return string(utf16.Decode(getStringBytes1(buf, -1*length)))
+        getStringBytes(buf, length)
+        return "Stupid unicode"//string(utf16.Decode(getStringBytes1(buf, -1*length)))
     }
 	return convertToString(getStringBytes(buf, length))
 }

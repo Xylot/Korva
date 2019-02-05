@@ -9,7 +9,7 @@ import (
 )
 
 func main() {    
-    path := "resources/Replays/2018_10.replay"
+    path := "resources/Replays/2015_08.replay"
     if len(os.Args) >= 2 {
         path = os.Args[1]
     }

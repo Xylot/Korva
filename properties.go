@@ -7,6 +7,7 @@ import (
 	//"github.com/kennygrant/sanitize"
 	"strings"
 	//"fmt"
+	"os"
 )
 
 func readIntProperty(buf *bytes.Buffer) int {
@@ -206,5 +207,10 @@ func getPropertyAttributes(buf *bytes.Buffer, headerContents *FullHeaderContents
 		headerContents.Team1Score = propValue
 	} else if strings.ToLower(propName) == "teamsize" {
 		headerContents.TeamSize = propValue
+		return
+	} else if strings.ToLower(propName) == "playername" {
+		headerContents.PlayerName = propValue
+		writeJSON(headerContents)
+		os.Exit(3)
 	}
 }

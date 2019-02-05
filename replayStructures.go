@@ -81,6 +81,7 @@ type FullHeaderContents struct {
 	Team0Score string
 	Team1Score string
 	TeamSize string
+	PlayerName string
 }
 
 type ContentProperties struct {
