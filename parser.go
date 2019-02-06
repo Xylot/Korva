@@ -9,7 +9,7 @@ import (
 )
 
 func main() {    
-    path := "resources/Replays/2015_08.replay"
+    path := "resources/Replays/2017_11.replay"
     if len(os.Args) >= 2 {
         path = os.Args[1]
     }
@@ -38,16 +38,18 @@ func parse(fileName string) {
     vi := getVersionInfo(buf)
     gc := getGameConstant(buf)
 
-    for i := 0; i < 21; i++ {
-        getPropertyAttributes(buf, &headerContents, &goals, &highlights, &playerStats)
-    }
-
     headerContents.Size = hp.Size
     headerContents.CRC = int32(hp.CRC)
     headerContents.MajorVersion = vi.MajorVersion
     headerContents.MinorVersion = vi.MinorVersion
     headerContents.NetVersion = vi.NetVersion
     headerContents.GameConstant = gc.Name
+
+    for i := 0; i < 21; i++ {
+        getPropertyAttributes(buf, &headerContents, &goals, &highlights, &playerStats, &hp, &vi, &gc)
+    }
+
+    
     writeJSON(headerContents)
 }
 

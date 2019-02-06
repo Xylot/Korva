@@ -6,7 +6,7 @@ import (
     "strconv"
 	//"github.com/kennygrant/sanitize"
 	"strings"
-	//"fmt"
+	"fmt"
 	"os"
 )
 
@@ -23,6 +23,14 @@ func readStrProperty(buf *bytes.Buffer) string {
 	skipBytes(buf, 8)
 	//return sanitize.Name(getNextString(buf));
 	return getNextString(buf)
+}
+
+func readStrProperty1(buf *bytes.Buffer) string {
+	var fullLength uint32
+	data := readNextBytes(buf, 8)
+	buffer := bytes.NewBuffer(data)
+    binary.Read(buffer, binary.LittleEndian, &fullLength)
+    return getNextString1(buf, int(fullLength))
 }
 
 func readByteProperty(buf *bytes.Buffer) int {
@@ -93,7 +101,7 @@ func readArrayValue(buf *bytes.Buffer, name string, headerContents *FullHeaderCo
 	propName := getNextString(buf)
 	propType := getNextString(buf)
 	propValue := readNextPropertyValue(buf, propType)
-	//fmt.Printf("	%+v: %+v\n", propName, propValue)
+	fmt.Printf("	%+v: %+v\n", propName, propValue)
 
 
 	if name == "Goals" {
@@ -144,7 +152,7 @@ func readNextPropertyValue(buf *bytes.Buffer, propertyType string) string {
 	if propertyType == "IntProperty" {
 		return strconv.Itoa(readIntProperty(buf));
 	} else if propertyType == "StrProperty" || propertyType == "NameProperty" {
-		return readStrProperty(buf);
+		return readStrProperty1(buf);
 	} else if propertyType == "ArrayProperty" {
 		return strconv.Itoa(readIntProperty(buf));
 	} else if propertyType == "ByteProperty" {
@@ -159,11 +167,17 @@ func readNextPropertyValue(buf *bytes.Buffer, propertyType string) string {
 	return "Useless piece of software"
 }
 
-func getPropertyAttributes(buf *bytes.Buffer, headerContents *FullHeaderContents, goals *Goals, highlights *HighLights, playerStats *PlayerStats) {
+func getPropertyAttributes(buf *bytes.Buffer, headerContents *FullHeaderContents, goals *Goals, highlights *HighLights, playerStats *PlayerStats, headerProperties *HeaderProperties, versionInfo *VersionInfo, gameConstant *GameConstant) {
+	if buf.Len() < 10 {
+		writeJSON(headerContents)
+		os.Exit(3)
+	}
+
 	propName := getNextString(buf)
 	propType := getNextString(buf)
 	propValue := readNextPropertyValue(buf, propType)
-	//fmt.Printf("???: %+v %+v %+v\n", propName, propType, propValue)
+	//fmt.Printf("Buffer: %+v", buf.Len())
+	fmt.Printf("???: %+v %+v %+v\n", propName, propType, propValue)
 	if propType == "ArrayProperty" {
 		count, _ := strconv.Atoi(propValue)
 		if propName == "Goals" || propName == "HighLights" {
@@ -191,6 +205,8 @@ func getPropertyAttributes(buf *bytes.Buffer, headerContents *FullHeaderContents
 		headerContents.MapName = propValue
 	} else if strings.ToLower(propName) == "matchtype" {
 		headerContents.MatchType = propValue
+		//writeJSON(headerContents)
+		//os.Exit(3)
 	} else if strings.ToLower(propName) == "maxchannels" {
 		headerContents.MaxChannels = propValue
 	} else if strings.ToLower(propName) == "maxreplaysize" {
@@ -210,7 +226,15 @@ func getPropertyAttributes(buf *bytes.Buffer, headerContents *FullHeaderContents
 		return
 	} else if strings.ToLower(propName) == "playername" {
 		headerContents.PlayerName = propValue
-		writeJSON(headerContents)
-		os.Exit(3)
+		// headerContents.Size = headerProperties.Size
+		// headerContents.CRC = int32(headerProperties.CRC)
+		// headerContents.MajorVersion = versionInfo.MajorVersion
+		// headerContents.MinorVersion = versionInfo.MinorVersion
+		// headerContents.NetVersion = versionInfo.NetVersion
+		// headerContents.GameConstant = gameConstant.Name
+		// writeJSON(headerContents)
+		// os.Exit(3)
 	}
+
+	//fmt.Printf("Length: %+v", buf)
 }

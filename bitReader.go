@@ -83,12 +83,36 @@ func convertToString(byteArray []byte) string {
 
 func getNextString(buf *bytes.Buffer) string {
     length := int(getStringLength(buf))
+    fmt.Println("length: %+v", length)
+
     //fmt.Printf("%+v", length)
     if length < 0 {
-        getStringBytes(buf, length)
+        skipBytes(buf, 4)
+        getStringBytes(buf, -1*length)
         return "Stupid unicode"//string(utf16.Decode(getStringBytes1(buf, -1*length)))
+    } else if length > 1000 {
+        skipBytes(buf, 4)
+        length := int(getStringLength(buf))
+        return convertToString(getStringBytes(buf, length))
     }
 	return convertToString(getStringBytes(buf, length))
+}
+
+func getNextString1(buf *bytes.Buffer, fullLength int) string {
+    length := int(getStringLength(buf))
+    fmt.Println("length: %v    fullLength: %v", length, fullLength)
+
+    //fmt.Printf("%+v", length)
+    if length < 0 {
+        //skipBytes(buf, 4)
+        getStringBytes(buf, fullLength - 4)
+        return "Stupid unicode"//string(utf16.Decode(getStringBytes1(buf, -1*length)))
+    } else if length > 1000 {
+        skipBytes(buf, 4)
+        length = int(getStringLength(buf))
+        return convertToString(getStringBytes(buf, fullLength - 4))
+    }
+    return convertToString(getStringBytes(buf, fullLength - 4))
 }
 
 func getFloatValue(buf *bytes.Buffer) float32 {
