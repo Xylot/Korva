@@ -19,8 +19,8 @@ func testJSON() {
 }
 
 func writeJSON(v interface{}) {
-	b, err := json.MarshalIndent(v, "", "	")
-	//b, err := json.Marshal(v)
+	//b, err := json.MarshalIndent(v, "", "	")
+	b, err := json.Marshal(v)
     fmt.Printf(string(b))
     if err != nil {}
 }

@@ -6,7 +6,7 @@ import (
     "strconv"
 	//"github.com/kennygrant/sanitize"
 	"strings"
-	"fmt"
+	//"fmt"
 	"os"
 )
 
@@ -101,7 +101,7 @@ func readArrayValue(buf *bytes.Buffer, name string, headerContents *FullHeaderCo
 	propName := getNextString(buf)
 	propType := getNextString(buf)
 	propValue := readNextPropertyValue(buf, propType)
-	fmt.Printf("	%+v: %+v\n", propName, propValue)
+	//fmt.Printf("	%+v: %+v\n", propName, propValue)
 
 
 	if name == "Goals" {
@@ -177,7 +177,7 @@ func getPropertyAttributes(buf *bytes.Buffer, headerContents *FullHeaderContents
 	propType := getNextString(buf)
 	propValue := readNextPropertyValue(buf, propType)
 	//fmt.Printf("Buffer: %+v", buf.Len())
-	fmt.Printf("???: %+v %+v %+v\n", propName, propType, propValue)
+	//fmt.Printf("???: %+v %+v %+v\n", propName, propType, propValue)
 	if propType == "ArrayProperty" {
 		count, _ := strconv.Atoi(propValue)
 		if propName == "Goals" || propName == "HighLights" {
