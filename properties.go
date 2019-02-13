@@ -169,7 +169,7 @@ func readNextPropertyValue(buf *bytes.Buffer, propertyType string) string {
 
 func getPropertyAttributes(buf *bytes.Buffer, headerContents *FullHeaderContents, goals *Goals, highlights *HighLights, playerStats *PlayerStats, headerProperties *HeaderProperties, versionInfo *VersionInfo, gameConstant *GameConstant) {
 	if buf.Len() < 10 {
-		writeJSON(headerContents)
+		writeJSON(headerContents, headerContents.ID)
 		os.Exit(3)
 	}
 

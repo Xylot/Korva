@@ -9,7 +9,7 @@ import (
 )
 
 func main() {    
-    path := "resources/Replays/2017_11.replay"
+    path := "resources/Replays/2015-2018/2017_11.replay"
     if len(os.Args) >= 2 {
         path = os.Args[1]
     }
@@ -50,7 +50,7 @@ func parse(fileName string) {
     }
 
     
-    writeJSON(headerContents)
+    writeJSON(headerContents, headerContents.ID)
 }
 
 func getContentProperties(file *os.File) ContentProperties {

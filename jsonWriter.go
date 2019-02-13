@@ -1,26 +1,19 @@
 package main
 
 import (
-    "fmt"
+    //"fmt"
     "encoding/json"
+    //"bufio"
+    "io/ioutil"
 )
 
-type User struct {
-    Name string
-}
-
-func testJSON() {
-    user := &User{Name: "Frank"}
-    b, err := json.Marshal(user)
-    if err != nil {
-        return
-    }
-    fmt.Printf(string(b))
-}
-
-func writeJSON(v interface{}) {
-	//b, err := json.MarshalIndent(v, "", "	")
-	b, err := json.Marshal(v)
-    fmt.Printf(string(b))
+func writeJSON(v interface{}, id string) {
+	b, err := json.MarshalIndent(v, "", "	")
+	//b, err := json.Marshal(v)
+    //fmt.Printf(string(b))
     if err != nil {}
+
+    fileName := id + ".json"
+
+    err = ioutil.WriteFile(fileName, b, 0644)
 }
