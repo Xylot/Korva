@@ -28,10 +28,10 @@ def main():
 		args = ['Korva.exe', demoPath + file]
 		#args = ['./korva', 'resources/replays/' + file]
 		#output = Popen(args, stdout=PIPE).communicate()[0].strip()
-		output = Popen(rhargs, stdout=PIPE).communicate()[0].decode()
+		output = Popen(args, stdout=PIPE).communicate()[0].decode()
 		#_json = json.loads(output)
 		#pprint(output)
-		logParseErrors(output, file)
+		#logParseErrors(output, file)
 		#pprint(_json)
 		
 		count = count + 1

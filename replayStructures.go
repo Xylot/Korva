@@ -124,11 +124,23 @@ type HighLights struct {
 	BallName string
 }
 
+// type PlayerStats struct {
+// 	Name string
+// 	Platform string
+// 	OnlinePlatform string
+// 	OnlineID string
+// 	Team string
+// 	Score string
+// 	Goals string
+// 	Assists string
+// 	Saves string
+// 	Shots string
+// 	BBot string
+// }
+
 type PlayerStats struct {
 	Name string
-	Platform string
-	OnlinePlatform string
-	OnlineID string
+	Platform PlatformProperty
 	Team string
 	Score string
 	Goals string
@@ -145,6 +157,11 @@ type IntProperty struct {
 	Type []byte
 	Nullspace uint32
 	Value uint32
+}
+
+type PlatformProperty struct {
+	OnlinePlatform string
+	OnlineID string
 }
 
 type ActorState int

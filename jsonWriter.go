@@ -1,7 +1,7 @@
 package main
 
 import (
-    //"fmt"
+    "fmt"
     "encoding/json"
     //"bufio"
     "io/ioutil"
@@ -10,10 +10,10 @@ import (
 func writeJSON(v interface{}, id string) {
 	b, err := json.MarshalIndent(v, "", "	")
 	//b, err := json.Marshal(v)
-    //fmt.Printf(string(b))
+    fmt.Printf(string(b))
     if err != nil {}
 
-    fileName := id + ".json"
+    fileName := "Resources/Headers/" + id + ".json"
 
     err = ioutil.WriteFile(fileName, b, 0644)
 }

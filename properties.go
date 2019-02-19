@@ -21,7 +21,6 @@ func readIntProperty(buf *bytes.Buffer) int {
 
 func readStrProperty(buf *bytes.Buffer) string {
 	skipBytes(buf, 8)
-	//return sanitize.Name(getNextString(buf));
 	return getNextString(buf)
 }
 
@@ -92,6 +91,7 @@ func readArrayProperty(buf *bytes.Buffer, arrayLength int, dataLength int, name 
 	} else if name == "HighLights" {
 		headerContents.HighlightsList = hl
 	} else if name == "PlayerStats" {
+
 		headerContents.PlayerStatsList = ps
 	}
 }
@@ -124,11 +124,10 @@ func readArrayValue(buf *bytes.Buffer, name string, headerContents *FullHeaderCo
 		if strings.ToLower(propName) == "name" {
 			playerStats.Name = propValue
 		} else if strings.ToLower(propName) == "platform" {
-			playerStats.Platform = propValue
 		} else if strings.ToLower(propName) == "onlineplatform" {
-			playerStats.OnlinePlatform = propValue
+			playerStats.Platform.OnlinePlatform = propValue
 		} else if strings.ToLower(propName) == "onlineid" {
-			playerStats.OnlineID = propValue
+			playerStats.Platform.OnlineID = propValue
 		} else if strings.ToLower(propName) == "team" {
 			playerStats.Team = propValue
 		} else if strings.ToLower(propName) == "score" {
@@ -149,6 +148,7 @@ func readArrayValue(buf *bytes.Buffer, name string, headerContents *FullHeaderCo
 }
 
 func readNextPropertyValue(buf *bytes.Buffer, propertyType string) string {
+	//fmt.Printf("???: %+v\n", propertyType)
 	if propertyType == "IntProperty" {
 		return strconv.Itoa(readIntProperty(buf));
 	} else if propertyType == "StrProperty" || propertyType == "NameProperty" {
@@ -163,6 +163,8 @@ func readNextPropertyValue(buf *bytes.Buffer, propertyType string) string {
 		return strconv.Itoa(readBooleanProperty(buf));
 	} else if propertyType == "FloatProperty" {
 		return strconv.Itoa(readFloatProperty(buf));
+	} else if propertyType == "OnlinePlatform_Steam" {
+		return "OnlinePlatform_Steam";
 	}
 	return "Useless piece of software"
 }
